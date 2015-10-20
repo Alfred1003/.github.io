@@ -11,8 +11,8 @@
 <meta property="og:url" content="http://Alfred1003.github.io/2015/10/20/【iOS程序启动与运转】- RunLoop个人小结/index.html">
 <meta property="og:site_name" content="楚天舒的技术博客">
 <meta property="og:description" content="学习iOS开发一般都是从UI开始的，从只知道从IB拖控件，到知道怎么在方法里写代码，然后会显示什么样的视图，产生什么样的事件，等等。其实程序从启动开始，一直都是按照苹果封装好的代码运行着，暴露的一些属性和方法作为接口，是让我们在给定的方法里写代码实现自定义功能，做出各种各样的应用。这些方法的调用顺序最为关键，熟悉了程序运转和方法调用的顺序，才可以更好地操控程序和代码，尽量避免Xcode不报错又实现">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/666982-9bf4831b87769d5a.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240">
-<meta property="og:updated_time" content="2015-10-20T06:59:36.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/666982-9bf4831b87769d5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2015-10-20T07:07:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【iOS程序启动与运转】- RunLoop个人小结.md">
 <meta name="twitter:description" content="学习iOS开发一般都是从UI开始的，从只知道从IB拖控件，到知道怎么在方法里写代码，然后会显示什么样的视图，产生什么样的事件，等等。其实程序从启动开始，一直都是按照苹果封装好的代码运行着，暴露的一些属性和方法作为接口，是让我们在给定的方法里写代码实现自定义功能，做出各种各样的应用。这些方法的调用顺序最为关键，熟悉了程序运转和方法调用的顺序，才可以更好地操控程序和代码，尽量避免Xcode不报错又实现">
@@ -330,7 +330,7 @@
 </li>
 </ul>
 <ul>
-<li>网络请求：<br>关于网络请求的接口:最底层是CFSocket层，然后是CFNetwork将其封装，然后是NSURLConnection对CFNetwork进行面向对象的封装，NSURLSession 是 iOS7 中新增的接口，也用到NSURLConnection的loader线程。所以还是以NSURLConnection为例。<br>当开始网络传输时，NSURLConnection 创建了两个新线程：com.apple.NSURLConnectionLoader 和 com.apple.CFSocket.private。其中 CFSocket 线程是处理底层 socket 连接的。NSURLConnectionLoader 这个线程内部会使用 RunLoop 来接收底层 socket 的事件，并通过之前添加的 Source0 通知到上层的 Delegate。<br><img src="http://upload-images.jianshu.io/upload_images/666982-9bf4831b87769d5a.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" alt="RunLoop_network.png"></li>
+<li>网络请求：<br>关于网络请求的接口:最底层是CFSocket层，然后是CFNetwork将其封装，然后是NSURLConnection对CFNetwork进行面向对象的封装，NSURLSession 是 iOS7 中新增的接口，也用到NSURLConnection的loader线程。所以还是以NSURLConnection为例。<br>当开始网络传输时，NSURLConnection 创建了两个新线程：com.apple.NSURLConnectionLoader 和 com.apple.CFSocket.private。其中 CFSocket 线程是处理底层 socket 连接的。NSURLConnectionLoader 这个线程内部会使用 RunLoop 来接收底层 socket 的事件，并通过之前添加的 Source0 通知到上层的 Delegate。<br><img src="http://upload-images.jianshu.io/upload_images/666982-9bf4831b87769d5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RunLoop_network.png"></li>
 </ul>
 <hr>
 <blockquote>

@@ -13,8 +13,8 @@
 <meta property="og:site_name" content="楚天舒的技术博客">
 <meta property="og:description" content="从C的面向过程到接触OC的对象、消息的过渡初期总会有知其然不知其所以然的纠结，相关的学习资源一般都是介绍有什么、使用步骤一二三四的套路，这样就很难知道知道本质是什么，能干什么不能干什么，为什么要选择用它。而实际开发过程，都是先有什么要解决，再努力找到实现方法。人脑的容易接受的信息，也多是主干到分枝的思维导图，纲举目张。所以，试着以自己的粗浅理解来写一点关于OC运行时的东西。
 代码的思想，大概是把重">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/666982-2a3d1f3bbe21c32c.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240">
-<meta property="og:updated_time" content="2015-10-20T06:59:18.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/666982-2a3d1f3bbe21c32c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2015-10-20T07:06:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【OC刨根问底】-Runtime简单粗暴理解">
 <meta name="twitter:description" content="从C的面向过程到接触OC的对象、消息的过渡初期总会有知其然不知其所以然的纠结，相关的学习资源一般都是介绍有什么、使用步骤一二三四的套路，这样就很难知道知道本质是什么，能干什么不能干什么，为什么要选择用它。而实际开发过程，都是先有什么要解决，再努力找到实现方法。人脑的容易接受的信息，也多是主干到分枝的思维导图，纲举目张。所以，试着以自己的粗浅理解来写一点关于OC运行时的东西。
@@ -318,7 +318,7 @@
 <p> 实例对象的isa指针指向类，类的isa指针指向其元类（metaClass）。对象就是一个含isa指针的结构体。类存储实例对象的方法列表，元类存储类的方法列表，元类也是类对象。<br>这是id类型的结构（类似于C里面的void *）：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> objc_object &#123;</span><br><span class="line">    Class isa  OBJC_ISA_<span class="built_in">AVAILABILITY</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_object *<span class="keyword">id</span>;</span><br></pre></td></tr></table></figure></p>
 <p>当创建实例对象时，分配的内存包含一个objc_object数据结构，然后是类到父类直到根类NSObject的实例变量的数据。NSObject类的alloc和allocWithZone:方法使用函数class_createInstance来创建objc_object数据结构。</p>
 <p>向一个Objective-C对象发送消息时，运行时库会根据实例对象的<code>isa</code>指针找到这个实例对象所属的类。Runtime库会在类的方法列表由<code>super_class</code>指针找到父类的方法列表直至根类NSObject中去寻找与消息对应的selector指向的方法。找到后即运行这个方法。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/666982-2a3d1f3bbe21c32c.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" alt="metaClass.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/666982-2a3d1f3bbe21c32c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="metaClass.png"></p>
 <blockquote>
 <p>上图是关于isa和super_class指针的图解：<br>1、isa：实例对象-&gt;类-&gt;元类-&gt;（<code>不经过父元类</code>）直接到根元类（NSObject的元类），<code>根元类的isa指向自己</code>；<br>2、 superclass：类-&gt;父类-&gt;…-&gt;根类NSObject，<code>元类-&gt;父元类-&gt;...-&gt;根元类-&gt;根类</code>,NSObject的superclass指向nil。</p>
 </blockquote>
