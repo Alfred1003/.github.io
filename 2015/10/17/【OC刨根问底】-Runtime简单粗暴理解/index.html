@@ -14,7 +14,7 @@
 <meta property="og:description" content="从C的面向过程到接触OC的对象、消息的过渡初期总会有知其然不知其所以然的纠结，相关的学习资源一般都是介绍有什么、使用步骤一二三四的套路，这样就很难知道知道本质是什么，能干什么不能干什么，为什么要选择用它。而实际开发过程，都是先有什么要解决，再努力找到实现方法。人脑的容易接受的信息，也多是主干到分枝的思维导图，纲举目张。所以，试着以自己的粗浅理解来写一点关于OC运行时的东西。
 代码的思想，大概是把重">
 <meta property="og:image" content="http://Alfred1003.github.io/Users/Alfred1003/blog/themes/yilia/source/img/metaClass.png">
-<meta property="og:updated_time" content="2015-10-20T07:13:09.000Z">
+<meta property="og:updated_time" content="2015-10-20T07:21:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【OC刨根问底】-Runtime简单粗暴理解">
 <meta name="twitter:description" content="从C的面向过程到接触OC的对象、消息的过渡初期总会有知其然不知其所以然的纠结，相关的学习资源一般都是介绍有什么、使用步骤一二三四的套路，这样就很难知道知道本质是什么，能干什么不能干什么，为什么要选择用它。而实际开发过程，都是先有什么要解决，再努力找到实现方法。人脑的容易接受的信息，也多是主干到分枝的思维导图，纲举目张。所以，试着以自己的粗浅理解来写一点关于OC运行时的东西。
@@ -243,6 +243,7 @@
 </blockquote>
 <p>实例对象只存放isa指针和实例变量，由isa指针找到所属类，类维护一个运行时可接收的<code>方法列表</code>；方法列表中的每个入口是一个<code>方法(Method)</code>，其中key是一个特定名称，即<code>选择器(SEL)</code>，其对应一个指向底层C实现函数的指针，即<code>实现(IMP)</code>，。运行时机制最关键核心是objc_msgSend函数，通过给target（类）发送selecter（SEL）来传递消息，找到匹配的IMP，指向实现的C函数。</p>
 <p>由于OC的运行时动态特性，在编译之后可以在运行时通过C操作函数，动态地创建修改类信息，动态绑定方法和重写实现，灵活地实现一些自定义功能。</p>
+<p>以上是摘要<br><a id="more"></a><br>以下是余下全文</p>
 <p>纸上写了个大纲，没有画思维导图，简单列个目录：</p>
 <blockquote>
 <p>一、运行时Runtime介绍</p>
